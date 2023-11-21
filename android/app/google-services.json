@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "506429967544",
+    "project_id": "tomwang-test-flutter",
+    "storage_bucket": "tomwang-test-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506429967544:android:27ad98c74199d32e2cb84d",
+        "android_client_info": {
+          "package_name": "com.tomappdev.hisnotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD_i3PNta8O8_BCTBlGen6xjf7PkaILZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
