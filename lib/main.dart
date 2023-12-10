@@ -8,7 +8,7 @@ import 'dart:developer' as devdart show log;
 import 'firebase_options.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized;
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -19,6 +19,7 @@ void main() {
       routes: {
         '/loginroute/': (context) => const LoginView(),
         '/registerroute/': (context) => const RegisterView(),
+        '/NotesView/': (context) => const NoteView(),
       }));
 }
 
