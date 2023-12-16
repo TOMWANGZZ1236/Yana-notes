@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hisnotes/View/login_view.dart';
 import 'package:hisnotes/View/register_view.dart';
 import 'package:hisnotes/View/verify_view.dart';
+import 'package:hisnotes/constants/routes.dart';
 import 'dart:developer' as devdart show log;
 import 'firebase_options.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized;
   runApp(MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -17,9 +18,9 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/loginroute/': (context) => const LoginView(),
-        '/registerroute/': (context) => const RegisterView(),
-        '/NotesView/': (context) => const NoteView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NoteView(),
       }));
 }
 
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
             }
 
           default:
-            return const Text('loading');
+            return const Text('xxx');
         }
       },
       future: Firebase.initializeApp(
@@ -77,8 +78,8 @@ class _NoteViewState extends State<NoteView> {
                   final choice = await showLogOutDialog(context);
                   if (choice) {
                     await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/loginroute/', (route) => false);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   }
               }
             },
