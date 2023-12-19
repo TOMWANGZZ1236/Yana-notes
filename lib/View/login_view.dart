@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as devdart show log;
 
 import 'package:hisnotes/constants/routes.dart';
+import 'package:hisnotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -63,7 +64,23 @@ class _LoginViewState extends State<LoginView> {
                     (route) => false,
                   );
                 } on FirebaseAuthException catch (e) {
-                  devdart.log(e.code);
+                  if (e.code == "INVALID_LOGIN_CREDENTIALS") {
+                    await showErrorDialog(
+                      context,
+                      "incorrect email or password",
+                    );
+                  } else {
+                    await showErrorDialog(
+                      context,
+                      e.code,
+                    );
+                    print('reached');
+                  }
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: const Text('Login')),
