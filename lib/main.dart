@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hisnotes/View/login_view.dart';
 import 'package:hisnotes/View/register_view.dart';
-import 'package:hisnotes/View/verify_view.dart';
+import 'package:hisnotes/View/verify_email_view.dart';
 import 'package:hisnotes/constants/routes.dart';
-import 'dart:developer' as devdart show log;
 import 'firebase_options.dart';
+import 'dart:developer' as devdart show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
@@ -21,6 +21,7 @@ void main() {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NoteView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       }));
 }
 
@@ -34,6 +35,7 @@ class HomePage extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;
+            devdart.log((user?.email) ?? 'null');
             if (user != null) {
               if (user.emailVerified) {
                 return const NoteView();

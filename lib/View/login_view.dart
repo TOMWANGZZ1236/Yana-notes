@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devdart show log;
@@ -67,14 +69,13 @@ class _LoginViewState extends State<LoginView> {
                   if (e.code == "INVALID_LOGIN_CREDENTIALS") {
                     await showErrorDialog(
                       context,
-                      "incorrect email or password",
+                      "Incorrect password or email",
                     );
                   } else {
                     await showErrorDialog(
                       context,
                       e.code,
                     );
-                    print('reached');
                   }
                 } catch (e) {
                   await showErrorDialog(

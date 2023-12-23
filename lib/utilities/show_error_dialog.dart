@@ -6,7 +6,7 @@ Future<void> showErrorDialog(BuildContext context, String error) {
       builder: (context) {
         return AlertDialog(
           title: const Text("An error has occured"),
-          content: Text("Error： $error has occured"),
+          content: Text("Error： $error"),
           actions: [
             TextButton(
                 onPressed: () {
