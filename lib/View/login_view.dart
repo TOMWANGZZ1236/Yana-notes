@@ -1,10 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devdart show log;
-
 import 'package:hisnotes/constants/routes.dart';
+import 'package:hisnotes/services/auth/auth_exception.dart';
+import 'package:hisnotes/services/auth/auth_service.dart';
 import 'package:hisnotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -57,11 +55,12 @@ class _LoginViewState extends State<LoginView> {
                 final email = _email.text;
                 final password = _password.text;
                 try {
-                  final userCredential = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: email, password: password);
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user?.emailVerified ?? false) {
+                  await AuthService.firebase().logIn(
+                    email: email,
+                    password: password,
+                  );
+                  final user = AuthService.firebase().currentUser;
+                  if (user?.isEmailVerified ?? false) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       notesRoute,
                       (route) => false,
@@ -72,22 +71,15 @@ class _LoginViewState extends State<LoginView> {
                       (route) => false,
                     );
                   }
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == "INVALID_LOGIN_CREDENTIALS") {
-                    await showErrorDialog(
-                      context,
-                      "Incorrect password or email",
-                    );
-                  } else {
-                    await showErrorDialog(
-                      context,
-                      e.code,
-                    );
-                  }
-                } catch (e) {
+                } on InvalidCredentialsAuthException {
                   await showErrorDialog(
                     context,
-                    e.toString(),
+                    "Incorrect password or email",
+                  );
+                } on GenericAuthException {
+                  await showErrorDialog(
+                    context,
+                    "Authentication Error",
                   );
                 }
               },
