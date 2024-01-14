@@ -4,12 +4,12 @@ abstract class AuthProvider {
   Future<void> initialize();
   AuthUser? get currentUser;
   Future<AuthUser> logIn({
-    required email,
-    required password,
+    required String email,
+    required String password,
   });
   Future<AuthUser> createUser({
-    required email,
-    required password,
+    required String email,
+    required String password,
   });
 
   Future<void> logOut();
