@@ -11,8 +11,8 @@ class AuthService implements AuthProvider {
 
   @override
   Future<AuthUser> createUser({
-    required email,
-    required password,
+    required String email,
+    required String password,
   }) =>
       provider.createUser(
         email: email,
@@ -24,8 +24,8 @@ class AuthService implements AuthProvider {
 
   @override
   Future<AuthUser> logIn({
-    required email,
-    required password,
+    required String email,
+    required String password,
   }) =>
       provider.logIn(
         email: email,

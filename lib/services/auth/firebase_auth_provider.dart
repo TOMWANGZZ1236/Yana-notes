@@ -10,8 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart'
 class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<AuthUser> createUser({
-    required email,
-    required password,
+    required String email,
+    required String password,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -52,8 +52,8 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<AuthUser> logIn({
-    required email,
-    required password,
+    required String email,
+    required String password,
   }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
