@@ -40,13 +40,20 @@ class NotesService {
   List<DatabaseNote> _notes = [];
 
   //Everything will be read and updated through the streamcontroller
-  final _notesStreamController =
-      StreamController<List<DatabaseNote>>.broadcast();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
 
   Stream<List<DatabaseNote>> get allNote => _notesStreamController.stream;
 
+  //This creates a Singleton for the class as the note service should only exist in one copy over the entire applicaiton
+  //
   static final NotesService _shared = NotesService._sharedinstance();
-  NotesService._sharedinstance();
+  NotesService._sharedinstance() {
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.add(_notes);
+      },
+    );
+  }
   factory NotesService() => _shared;
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {

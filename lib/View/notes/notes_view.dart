@@ -31,8 +31,13 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Main UI'),
+          title: const Text('Your Notes:'),
           actions: [
+            IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(newNoteRoute);
+                }),
             PopupMenuButton<MenuItems>(
               onSelected: (value) async {
                 switch (value) {
@@ -41,7 +46,9 @@ class _NoteViewState extends State<NoteView> {
                     if (choice) {
                       await AuthService.firebase().logOut();
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          loginRoute, (route) => false);
+                        loginRoute,
+                        (route) => false,
+                      );
                     }
                 }
               },
@@ -64,8 +71,25 @@ class _NoteViewState extends State<NoteView> {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Text('Waiting for all the notes');
-
+                        case ConnectionState.active:
+                          if (snapshot.hasData) {
+                            final allNotes = snapshot.data;
+                            return ListView.builder(
+                              itemCount: allNotes!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final note = allNotes[index].text;
+                                return ListTile(
+                                    title: Text(
+                                  note,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  overflow: TextOverflow.ellipsis,
+                                ));
+                              },
+                            );
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
                         default:
                           return const CircularProgressIndicator();
                       }
