@@ -149,10 +149,12 @@ class NotesService {
     await _ensureDbIsOpen();
     final db = _getDatabaseorthrow();
     final deletedCount = await db.delete(
-      userTable,
+      noteTable,
       where: 'id = ?',
       whereArgs: [id],
     );
+    print(deletedCount);
+    print(id);
     if (deletedCount == 0) {
       throw CouldNotDeleteNote();
     } else {

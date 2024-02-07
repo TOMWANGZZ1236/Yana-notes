@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hisnotes/View/notes/note_list_view.dart';
 import 'package:hisnotes/constants/routes.dart';
 import 'package:hisnotes/enums/menu_action.dart';
 import 'package:hisnotes/services/auth/auth_service.dart';
@@ -21,11 +22,11 @@ class _NoteViewState extends State<NoteView> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _notesService.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,20 +74,13 @@ class _NoteViewState extends State<NoteView> {
                         case ConnectionState.waiting:
                         case ConnectionState.active:
                           if (snapshot.hasData) {
-                            final allNotes = snapshot.data;
-                            return ListView.builder(
-                              itemCount: allNotes!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final note = allNotes[index].text;
-                                return ListTile(
-                                    title: Text(
-                                  note,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  overflow: TextOverflow.ellipsis,
-                                ));
-                              },
-                            );
+                            final allNotes =
+                                snapshot.data as List<DatabaseNote>;
+                            return NotesListView(
+                                notes: allNotes,
+                                onDeleteNote: (note) async {
+                                  await _notesService.deleteNote(id: note.id);
+                                });
                           } else {
                             return const CircularProgressIndicator();
                           }
