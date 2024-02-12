@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hisnotes/View/login_view.dart';
-import 'package:hisnotes/View/notes/new_note_view.dart';
+import 'package:hisnotes/View/notes/create_update_note_view.dart';
 import 'package:hisnotes/View/notes/notes_view.dart';
 import 'package:hisnotes/View/register_view.dart';
 import 'package:hisnotes/View/verify_email_view.dart';
@@ -24,7 +24,7 @@ void main() {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NoteView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        newNoteRoute: (context) => const NewNoteView(),
+        createOrUpdateNoteRoute: (context) => const NewNoteView(),
       }));
 }
 
