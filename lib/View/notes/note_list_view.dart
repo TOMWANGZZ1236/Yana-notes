@@ -33,10 +33,8 @@ class NotesListView extends StatelessWidget {
           trailing: IconButton(
             onPressed: () async {
               final shouldDelete = await showDeleteDialog(context);
-              print('yes');
               if (shouldDelete) {
                 onDeleteNote(note);
-                print(note);
               }
             },
             icon: const Icon(Icons.delete),

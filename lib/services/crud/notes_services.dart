@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hisnotes/extensions/list/filter.dart';
 import 'package:hisnotes/services/crud/crud_exceptions.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
@@ -39,10 +40,20 @@ class NotesService {
 
   List<DatabaseNote> _notes = [];
 
+  DatabaseUser? _user;
+
   //Everything will be read and updated through the streamcontroller
   late final StreamController<List<DatabaseNote>> _notesStreamController;
 
-  Stream<List<DatabaseNote>> get allNote => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNote =>
+      _notesStreamController.stream.filter((note) {
+        final currentUser = _user;
+        if (currentUser != null) {
+          return currentUser.id == note.userId;
+        } else {
+          throw UserShouldBeSetBeforeReadingAllNotes;
+        }
+      });
 
   //This creates a Singleton for the class as the note service should only exist in one copy over the entire applicaiton
   //
@@ -56,12 +67,21 @@ class NotesService {
   }
   factory NotesService() => _shared;
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setCurrentUser = true,
+  }) async {
     try {
       final user = await getUser(email: email);
+      if (setCurrentUser) {
+        _user = user;
+      }
       return user;
     } on CouldNotFindUser {
       final newUser = await createUser(email: email);
+      if (setCurrentUser) {
+        _user = newUser;
+      }
       return newUser;
     } catch (e) {
       rethrow;
