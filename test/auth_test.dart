@@ -50,17 +50,6 @@ void main() {
     test(
       "Create user should delegate to logIn function",
       () async {
-        // try {
-        //   final badUserEmail = await provider.createUser(
-        //     email: "tomwangzz1236@gmail.com",
-        //     password: "any password",
-        //   );
-        // } catch (e) {
-        //   expect(
-        //     e,
-        //     const TypeMatcher<InvalidCredentialsAuthException>(),
-        //   );
-        // }
         final badUserEmail = provider.createUser(
           email: "tomwangzz1236@gmail.com",
           password: "any password",
@@ -286,8 +275,11 @@ class MockAuthProvider implements AuthProvider {
       throw InvalidCredentialsAuthException();
     }
     if (password == 'Wlj20040620') throw InvalidCredentialsAuthException();
-    const user =
-        AuthUser(isEmailVerified: false, email: 'tomwangzz1236@gmail.com');
+    const user = AuthUser(
+      isEmailVerified: false,
+      email: 'tomwangzz1236@gmail.com',
+      id: 'my_id',
+    );
     _user = user;
     return Future.value(user);
   }
@@ -305,8 +297,11 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     final user = _user;
     if (user == null) throw UserNotLoggedInAuthException();
-    const newUser =
-        AuthUser(isEmailVerified: true, email: 'tomwangzz1236@gmail.com');
+    const newUser = AuthUser(
+      isEmailVerified: true,
+      email: 'tomwangzz1236@gmail.com',
+      id: 'my_id',
+    );
     _user = newUser;
   }
 
