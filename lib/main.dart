@@ -8,6 +8,7 @@ import 'package:hisnotes/View/notes/notes_view.dart';
 import 'package:hisnotes/View/register_view.dart';
 import 'package:hisnotes/View/verify_email_view.dart';
 import 'package:hisnotes/constants/routes.dart';
+import 'package:hisnotes/helpers/loading/loading_screen.dart';
 import 'package:hisnotes/services/auth/bloc/auth_bloc.dart';
 import 'package:hisnotes/services/auth/bloc/auth_event.dart';
 import 'package:hisnotes/services/auth/bloc/auth_state.dart';
@@ -38,19 +39,27 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is AuthStateLoggedOut) {
           return const LoginView();
         } else if (state is AuthStateLoggedIn) {
-          print('reached1');
           return const NoteView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),
           );
+        }
+      },
+      listener: (BuildContext context, AuthState state) {
+        if (state.isLoading == true) {
+          LoadingScreen().show(context: context, text: state.loadingText!);
+        } else {
+          LoadingScreen().hide();
         }
       },
     );
