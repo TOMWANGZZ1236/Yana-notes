@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hisnotes/services/auth/auth_service.dart';
 import 'package:hisnotes/services/cloud/cloud_note.dart';
 import 'package:hisnotes/services/crud/notes_services.dart';
-import 'package:hisnotes/utilities/dialogs/cannot_share_empty_note.dart';
+import 'package:hisnotes/utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:hisnotes/utilities/generics/get_arguments.dart';
 import 'package:hisnotes/services/cloud/cloud_service_constants.dart';
 import 'package:hisnotes/services/cloud/cloud_service_exception.dart';
