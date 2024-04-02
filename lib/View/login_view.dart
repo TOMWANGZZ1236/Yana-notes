@@ -49,7 +49,10 @@ class _LoginViewState extends State<LoginView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Login')),
+        appBar: AppBar(
+          title: const Text('Login'),
+          centerTitle: true,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -59,6 +62,7 @@ class _LoginViewState extends State<LoginView> {
               TextField(
                 controller: _email,
                 autocorrect: false,
+                autofocus: true,
                 enableSuggestions: false,
                 decoration:
                     const InputDecoration(hintText: 'Please enter your email'),
