@@ -28,6 +28,18 @@ class FirebaseCloudStorage {
     }
   }
 
+  Future<void> deleteAllNote({required String owneruserId}) async {
+    try {
+      var snapshots =
+          await notes.where(ownerUserIdFieldName, isEqualTo: owneruserId).get();
+      for (var doc in snapshots.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      throw CouldNotDelete();
+    }
+  }
+
   Future<void> updateNote({
     required String documentId,
     required String text,
@@ -39,19 +51,12 @@ class FirebaseCloudStorage {
     }
   }
 
-  Stream<Iterable<CloudNote>> allNotes({required String owneruserId}) =>
-      notes.snapshots().map((event) => event.docs
-          .map((doc) => CloudNote.fromSnapShot(doc))
-          .where((note) => note.ownerUserId == owneruserId));
-  Future<Iterable<CloudNote>> getNotes({required String ownerUserId}) async {
-    try {
-      return await notes
-          .where(ownerUserIdFieldName, isEqualTo: ownerUserId)
-          .get()
-          .then(
-              (value) => value.docs.map((doc) => CloudNote.fromSnapShot(doc)));
-    } catch (e) {
-      throw CouldNotFindNote();
-    }
+  Stream<Iterable<CloudNote>> allNotes({required String owneruserId}) {
+    final allNotes = notes
+        .where(ownerUserIdFieldName, isEqualTo: owneruserId)
+        .snapshots()
+        .map((event) => event.docs.map((doc) => CloudNote.fromSnapShot(doc)));
+
+    return allNotes;
   }
 }

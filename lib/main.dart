@@ -7,6 +7,7 @@ import 'package:hisnotes/View/forget_password_view.dart';
 import 'package:hisnotes/View/login_view.dart';
 import 'package:hisnotes/View/notes/create_update_note_view.dart';
 import 'package:hisnotes/View/notes/notes_view.dart';
+import 'package:hisnotes/View/notes/notes_view_guest.dart';
 import 'package:hisnotes/View/register_view.dart';
 import 'package:hisnotes/View/verify_email_view.dart';
 import 'package:hisnotes/constants/routes.dart';
@@ -59,6 +60,8 @@ class HomePage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
+        } else if (state is AuthStateLoggedInAsGuest) {
+          return const GuestNoteView();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),

@@ -46,4 +46,7 @@ class AuthService implements AuthProvider {
       provider.sendResetPassword(
         toEmail: toEmail,
       );
+
+  @override
+  Future<void> deleteUser() => provider.deleteUser();
 }

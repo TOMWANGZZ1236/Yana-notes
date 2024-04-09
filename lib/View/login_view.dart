@@ -1,14 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hisnotes/constants/routes.dart';
+import 'package:hisnotes/constants/colors.dart';
+
 import 'package:hisnotes/services/auth/auth_exception.dart';
-import 'package:hisnotes/services/auth/auth_service.dart';
+
 import 'package:hisnotes/services/auth/bloc/auth_bloc.dart';
 import 'package:hisnotes/services/auth/bloc/auth_state.dart';
 import 'package:hisnotes/services/auth/bloc/auth_event.dart';
 import 'package:hisnotes/utilities/dialogs/error_dialog.dart';
-import 'package:hisnotes/utilities/dialogs/loading_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -52,6 +52,7 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(
           title: const Text('Login'),
           centerTitle: true,
+          backgroundColor: appBarColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -86,7 +87,14 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         );
                   },
-                  child: const Text('Login')),
+                  child: const Text('Log In')),
+              TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventLogInAsGuest(),
+                        );
+                  },
+                  child: const Text('Log in as guest')),
               TextButton(
                   onPressed: () {
                     context.read<AuthBloc>().add(

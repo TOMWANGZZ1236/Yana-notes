@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hisnotes/constants/colors.dart';
 import 'package:hisnotes/constants/routes.dart';
 import 'package:hisnotes/services/auth/auth_exception.dart';
 import 'package:hisnotes/services/auth/auth_service.dart';
@@ -64,6 +65,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Register'),
+          backgroundColor: appBarColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -1,1 +1,1 @@
-enum MenuItems { logout }
+enum MenuItems { logout, delete }

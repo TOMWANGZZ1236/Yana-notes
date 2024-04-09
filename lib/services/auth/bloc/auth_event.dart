@@ -39,3 +39,11 @@ class AuthEventForgetPassword extends AuthEvent {
 class AuthEventLogOut extends AuthEvent {
   const AuthEventLogOut();
 }
+
+class AuthEventDeleteUser extends AuthEvent {
+  const AuthEventDeleteUser();
+}
+
+class AuthEventLogInAsGuest extends AuthEvent {
+  const AuthEventLogInAsGuest();
+}

@@ -40,7 +40,6 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  // TODO: implement currentUser
   AuthUser? get currentUser {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -108,14 +107,18 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<void> sendResetPassword({required String toEmail}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: toEmail);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'firebase_auth/invalid-email') {
-        throw InvalidEmailAuthException();
-      } else if (e.code == 'firenase_auth/user-not-found') {
-        throw UserNotFoundAuthException();
-      }
     } catch (_) {
       throw GenericAuthException();
+    }
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.delete();
+    } else {
+      throw UserNotLoggedInAuthException();
     }
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hisnotes/constants/colors.dart';
 import 'package:hisnotes/services/auth/auth_service.dart';
 import 'package:hisnotes/services/cloud/cloud_note.dart';
-import 'package:hisnotes/services/crud/notes_services.dart';
 import 'package:hisnotes/utilities/dialogs/cannot_share_empty_note_dialog.dart';
+import 'package:hisnotes/utilities/dialogs/error_dialog.dart';
 import 'package:hisnotes/utilities/generics/get_arguments.dart';
-import 'package:hisnotes/services/cloud/cloud_service_constants.dart';
-import 'package:hisnotes/services/cloud/cloud_service_exception.dart';
+
 import 'package:hisnotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -34,10 +34,14 @@ class _NewNoteViewState extends State<NewNoteView> {
       return;
     }
     final text = TextEditingController().text;
-    await _notesService.updateNote(
-      text: text,
-      documentId: '',
-    );
+    try {
+      await _notesService.updateNote(
+        text: text,
+        documentId: note.documentId,
+      );
+    } catch (e) {
+      return;
+    }
   }
 
   void _setUpTextControllerListener() {
@@ -77,10 +81,14 @@ class _NewNoteViewState extends State<NewNoteView> {
     final note = _note;
     final text = _textEditingController.text;
     if (text.isNotEmpty && note != null) {
-      _notesService.updateNote(
-        text: text,
-        documentId: note.documentId,
-      );
+      try {
+        _notesService.updateNote(
+          text: text,
+          documentId: note.documentId,
+        );
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -97,6 +105,7 @@ class _NewNoteViewState extends State<NewNoteView> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("New Notes:"),
+          backgroundColor: appBarColor,
           actions: [
             IconButton(
               onPressed: () async {
@@ -111,25 +120,28 @@ class _NewNoteViewState extends State<NewNoteView> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: createOrGetExistingNote(context),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                _note = snapshot.data;
-                _setUpTextControllerListener();
-                return TextField(
-                  controller: _textEditingController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                      hintText: "Please enter your notes"),
-                );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FutureBuilder(
+            future: createOrGetExistingNote(context),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.done:
+                  // _note = snapshot.data;
+                  _setUpTextControllerListener();
+                  return TextField(
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                        hintText: "Please enter your notes"),
+                  );
 
-              default:
-                return const CircularProgressIndicator();
-            }
-          },
+                default:
+                  return const CircularProgressIndicator();
+              }
+            },
+          ),
         ));
   }
 }

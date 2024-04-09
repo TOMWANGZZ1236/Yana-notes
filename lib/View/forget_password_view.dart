@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hisnotes/constants/colors.dart';
 import 'package:hisnotes/services/auth/bloc/auth_bloc.dart';
 import 'package:hisnotes/services/auth/bloc/auth_event.dart';
 import 'package:hisnotes/services/auth/bloc/auth_state.dart';
@@ -33,11 +34,10 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateForgetPassword) {
-          if (state.hasSentEmail == true) {
+          if (state.hasSentEmail == true && state.exception == null) {
             _controller.clear();
-            await showPasswordResetEmailSentDialog;
-          }
-          if (state.exception != null) {
+            await showPasswordResetEmailSentDialog(context);
+          } else if (state.exception != null) {
             await showErrorDialog(context,
                 "Please enter a registered user, we can't find the provided email");
           }
@@ -46,6 +46,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
       child: Scaffold(
           appBar: AppBar(
             title: const Text('Forget Password'),
+            backgroundColor: appBarColor,
           ),
           body: Padding(
             padding: const EdgeInsets.all(16),

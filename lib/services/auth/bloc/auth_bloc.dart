@@ -2,12 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hisnotes/services/auth/auth_provider.dart';
 import 'package:hisnotes/services/auth/bloc/auth_event.dart';
 import 'package:hisnotes/services/auth/bloc/auth_state.dart';
+import 'package:hisnotes/services/cloud/firebase_cloud_storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider)
       : super(const AuthStateUninitialized(isLoading: true)) {
-    //Forgpt password
-    on<AuthEventForgetPassword>((event, emit) {
+    //Forgot password
+    on<AuthEventForgetPassword>((event, emit) async {
       emit(const AuthStateForgetPassword(
         exception: null,
         isLoading: false,
@@ -28,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       bool didSendEmail;
       Exception? exception;
       try {
-        provider.sendResetPassword(toEmail: email);
+        await provider.sendResetPassword(toEmail: email);
         didSendEmail = true;
         exception = null;
       } on Exception catch (e) {
@@ -37,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
       emit(AuthStateForgetPassword(
         exception: exception,
-        isLoading: true,
+        isLoading: false,
         hasSentEmail: didSendEmail,
       ));
     });
@@ -132,10 +133,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    //Guest LogIn
+    on<AuthEventLogInAsGuest>((event, emit) async {
+      emit(const AuthStateLoggedInAsGuest(
+        isLoading: false,
+      ));
+    });
+
     //Log Out
     on<AuthEventLogOut>((event, emit) async {
       try {
         await provider.logOut();
+        emit(const AuthStateLoggedOut(
+          exception: null,
+          isLoading: false,
+        ));
+      } on Exception catch (e) {
+        emit(AuthStateLoggedOut(
+          exception: e,
+          isLoading: false,
+        ));
+      }
+    });
+
+    //Delete User
+    on<AuthEventDeleteUser>((event, emit) async {
+      try {
+        FirebaseCloudStorage()
+            .deleteAllNote(owneruserId: provider.currentUser!.id);
+        await Future.delayed(const Duration(seconds: 3));
+        await provider.deleteUser();
+
         emit(const AuthStateLoggedOut(
           exception: null,
           isLoading: false,
