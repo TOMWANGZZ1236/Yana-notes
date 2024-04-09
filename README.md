@@ -1,4 +1,4 @@
-# hisnotes
+# Yana's Notes
 
 A new Flutter project.
 
