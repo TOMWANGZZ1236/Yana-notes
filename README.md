@@ -1,6 +1,6 @@
 # Yana's Notes
 
-A new Flutter project.
+A Cross-Platform Notes Flutter Application.
 
 ## Getting Started
 
