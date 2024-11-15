@@ -5,7 +5,7 @@
 This project is a cross-platform mobile application developed using Flutter, designed to help users create, edit, and manage their notes efficiently. The app features a clean and intuitive user interface and leverages Firebase for backend database.
 
 ### Tech Stack
-- **Flutter**: Used for building the mobile application
+- **Flutter**: Used for building the mobile application frontend
 - **Firebase**: Backend database for storing and retrieving user data
 
 ## Demo
