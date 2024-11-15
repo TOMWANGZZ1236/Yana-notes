@@ -10,7 +10,7 @@ This project is a cross-platform mobile application developed using Flutter, des
 
 ## Demo
 
-Here's a look at the application in action📱:
+Here's a look at the application in action📱🗒️:
 
 ### Login Screen
 <p align="center">
@@ -36,14 +36,13 @@ Here's a look at the application in action📱:
 
 ### Challenges Faced
 - **Integration of Firebase**: One of the initial challenges was integrating Firebase with Flutter. Managing user authentication and data storage efficiently required deep understanding of asynchronous operations in Dart.
-- **UI Consistency**: Ensuring that the UI remains consistent across different devices was another significant challenge due to the diverse nature of Android and iOS devices.
+- **Release on App Store**: Another challenge is to get all the permissions and developer certificates to let me release this app on App Store.
 
 ### Accomplishments
-- **Real-time Synchronization**: Implementing real-time data sync was a major achievement. It enhanced the user experience by providing immediate updates across all user devices.
 - **Robust Authentication**: Developing a secure and robust authentication system using Firebase Auth helped in protecting user data.
 
 ### What I Learned
-This project not only bolstered my technical skills in Flutter and Firebase but also improved my problem-solving abilities. I learned the importance of persistence and iterative development in software engineering.
+This project not only bolstered my technical skills in Flutter and Firebase but also improved my understanding of full-stack mobile development. I also learned the importance of persistence and iterative development in software engineering.
 
 ---
 
