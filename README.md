@@ -13,16 +13,24 @@ This project is a cross-platform mobile application developed using Flutter, des
 Here's a look at the application in action:
 
 ### Login Screen
-![Login Screen](/assets/image1.png)
+<p align="center">
+  <img src="/assets/image1.png" alt="Login Screen" width="250">
+</p>
 
 ### Note Dashboard
-![Note Dashboard](/assets/image1.png)
+<p align="center">
+  <img src="/assets/image1.png" alt="Note Dashboard" width="250">
+</p>
 
 ### Note Editing
-![Note Editing](/assets/image1.png)
+<p align="center">
+  <img src="/assets/image1.png" alt="Note Editing" width="250">
+</p>
 
 ### Settings
-![Settings](/assets/image1.png)
+<p align="center">
+  <img src="/assets/image1.png" alt="Settings" width="250">
+</p>
 
 ## Lessons Learned and Journey
 
